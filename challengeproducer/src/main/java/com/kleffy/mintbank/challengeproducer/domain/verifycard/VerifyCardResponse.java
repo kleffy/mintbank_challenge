@@ -1,6 +1,8 @@
 package com.kleffy.mintbank.challengeproducer.domain.verifycard;
 
-public class VerifyCardResponse {
+import java.io.Serializable;
+
+public class VerifyCardResponse implements Serializable {
     private boolean success;
     private Payload payload;
 

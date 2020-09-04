@@ -67,8 +67,13 @@ public class PerformanceResponse {
             return this;
         }
 
-        public Builder payload(Map<String, Integer> payload){
-            this.payload = payload;
+        public Builder size(int size){
+            this.start = size;
+            return this;
+        }
+
+        public Builder payload(Payload payload){
+            this.payload = payload.getCardHits();
             return this;
         }
 
