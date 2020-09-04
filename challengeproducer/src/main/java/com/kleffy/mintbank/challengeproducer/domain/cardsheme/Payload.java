@@ -1,4 +1,4 @@
-package com.kleffy.mintbank.challengeproducer.domain.verifycard;
+package com.kleffy.mintbank.challengeproducer.domain.cardsheme;
 
 public class Payload {
     private String scheme, type, bank;
