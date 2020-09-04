@@ -7,4 +7,6 @@ import java.io.IOException;
 
 public interface CardSchemeService {
     ResponseEntity<VerifyCardResponse> verifyCard(String cardNumber) throws IOException, InterruptedException;
+
+    ResponseEntity<?> retrieveStats(int start, int limit);
 }

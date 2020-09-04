@@ -7,32 +7,52 @@ public class PerformanceResponse {
     private int start, limit, size;
     private Map<String, Integer> payload;
 
+    public PerformanceResponse(boolean success, int start, int limit, int size, Payload payload) {
+        this.success = success;
+        this.start = start;
+        this.limit = limit;
+        this.size = size;
+        this.payload = payload.getCardHits();
+    }
+
     public boolean isSuccess() {
         return success;
     }
 
-    public int getStart(){
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public int getStart() {
         return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
     }
 
     public int getLimit() {
         return limit;
     }
 
-    public int getSize(){
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public int getSize() {
         return size;
     }
 
-    public Map<String, Integer> getPayload(){
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public Map<String, Integer> getPayload() {
         return payload;
     }
 
-    public PerformanceResponse(Builder builder){
-        this.success = builder.success;
-        this.start = builder.start;
-        this.limit = builder.limit;
-        this.size = builder.size;
-        this.payload = builder.payload;
+    public void setPayload(Map<String, Integer> payload) {
+        this.payload = payload;
     }
 
     @Override
@@ -44,49 +64,5 @@ public class PerformanceResponse {
                 ", size=" + size +
                 ", payload=" + payload +
                 '}';
-    }
-
-    public static class Builder{
-
-        private boolean success;
-        private int start, limit, size;
-        private Map<String, Integer> payload;
-
-        public Builder success(boolean success){
-            this.success = success;
-            return this;
-        }
-
-        public Builder start(int start){
-            this.start = start;
-            return this;
-        }
-
-        public Builder limit(int limit){
-            this.limit = limit;
-            return this;
-        }
-
-        public Builder size(int size){
-            this.start = size;
-            return this;
-        }
-
-        public Builder payload(Payload payload){
-            this.payload = payload.getCardHits();
-            return this;
-        }
-
-        public Builder copy(PerformanceResponse pr){
-            this.success = pr.success;
-            this.start = pr.start;
-            this.limit = pr.limit;
-            this.size = pr.size;
-            return this;
-        }
-
-        public PerformanceResponse build(){
-            return new PerformanceResponse(this);
-        }
     }
 }

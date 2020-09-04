@@ -4,9 +4,13 @@ import com.google.gson.Gson;
 import com.kleffy.mintbank.challengeproducer.domain.binlist.LookupResponse;
 import com.kleffy.mintbank.challengeproducer.domain.cardsheme.VerifyCardResponse;
 import com.kleffy.mintbank.challengeproducer.domain.performance.CardHit;
+import com.kleffy.mintbank.challengeproducer.domain.performance.Payload;
+import com.kleffy.mintbank.challengeproducer.domain.performance.PerformanceResponse;
 import com.kleffy.mintbank.challengeproducer.domain.performance.VerifiedCard;
 import com.kleffy.mintbank.challengeproducer.factory.cardscheme.VerifyCardResponseFactory;
 import com.kleffy.mintbank.challengeproducer.factory.performance.CardHitFactory;
+import com.kleffy.mintbank.challengeproducer.factory.performance.PayloadFactory;
+import com.kleffy.mintbank.challengeproducer.factory.performance.PerformanceResponseFactory;
 import com.kleffy.mintbank.challengeproducer.factory.performance.VerifiedCardFactory;
 import com.kleffy.mintbank.challengeproducer.service.cardscheme.CardSchemeService;
 import com.kleffy.mintbank.challengeproducer.service.performance.impl.CardHitServiceImpl;
@@ -21,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -45,6 +50,7 @@ public class CardSchemeServiceImpl implements CardSchemeService {
 
     @Override
     public ResponseEntity<VerifyCardResponse> verifyCard(String cardNumber) throws IOException, InterruptedException {
+        //TODO: optimise, what happens if api returns with error?
         VerifyCardResponse cardResponse = null;
         VerifiedCard vc = verifiedCardService.read(cardNumber);
         if (vc == null) {
@@ -64,6 +70,15 @@ public class CardSchemeServiceImpl implements CardSchemeService {
             cardHitService.update(ch);
         }
         return new ResponseEntity<>(cardResponse, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> retrieveStats(int start, int limit) {
+        int size = verifiedCardService.getAll().size();
+        Map<String, Integer> hits = cardHitService.getNumberOfHits(limit);
+        Payload payload = PayloadFactory.buildPayload(hits);
+        PerformanceResponse response = PerformanceResponseFactory.buildPerformanceResponse(true, start, limit, size, payload);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     public VerifyCardResponse callBinLisApi(String cardNumber) throws IOException, InterruptedException {
