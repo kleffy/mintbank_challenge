@@ -23,12 +23,12 @@ public class CardHitRepositoryImpl implements CardHitRepository {
     @Override
     public Map<String, Integer> getNumberOfHits(int limit) {
         Map<String, Integer> cardHits = new HashMap<>();
-        int count = 0;
-        for(Map.Entry<String, CardHit> entry : this.cardHitDB.entrySet()){
-            if(count <= limit){
-                cardHits.put(entry.getValue().getCardNumber(), entry.getValue().getHitTimes());
+        int count = 1;
+        for (Map.Entry<String, CardHit> entry : this.cardHitDB.entrySet()) {
+            if (count <= limit) {
+                cardHits.put(entry.getValue().getCardNumber(),entry.getValue().getHitTimes());
                 count++;
-            }else {
+            } else {
                 break;
             }
         }
