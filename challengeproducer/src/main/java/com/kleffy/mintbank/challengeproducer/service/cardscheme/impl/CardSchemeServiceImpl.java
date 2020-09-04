@@ -13,6 +13,7 @@ import com.kleffy.mintbank.challengeproducer.factory.performance.PayloadFactory;
 import com.kleffy.mintbank.challengeproducer.factory.performance.PerformanceResponseFactory;
 import com.kleffy.mintbank.challengeproducer.factory.performance.VerifiedCardFactory;
 import com.kleffy.mintbank.challengeproducer.publisher.KafkaProducer;
+import com.kleffy.mintbank.challengeproducer.publisher.dto.KafkaVerifiedCard;
 import com.kleffy.mintbank.challengeproducer.service.cardscheme.CardSchemeService;
 import com.kleffy.mintbank.challengeproducer.service.performance.impl.CardHitServiceImpl;
 import com.kleffy.mintbank.challengeproducer.service.performance.impl.VerifiedCardServiceImpl;
@@ -63,7 +64,8 @@ public class CardSchemeServiceImpl implements CardSchemeService {
             vc = verifiedCardService.create(vc);
             CardHit cardHit = CardHitFactory.buildCardHit(cardNumber, 1);
             cardHitService.create(cardHit);
-            kafkaProducer.produce(VerifiedCardFactory.buildVerifiedCard(null, vc.getScheme(), vc.getType(), vc.getBank()));
+            //kafkaProducer.produce(VerifiedCardFactory.buildVerifiedCard(null, vc.getScheme(), vc.getType(), vc.getBank()));
+            kafkaProducer.produce(new KafkaVerifiedCard( vc.getScheme(), vc.getType(), vc.getBank()));
         } else {
             System.out.println("Seems you have asked me about this card before. thinking...\n");
             String type = vc.getType();
@@ -72,7 +74,7 @@ public class CardSchemeServiceImpl implements CardSchemeService {
             cardResponse = VerifyCardResponseFactory.buildVerifyCardResponse(true, scheme, type, bank);
             CardHit ch = cardHitService.read(cardNumber);
             cardHitService.update(ch);
-            kafkaProducer.produce(VerifiedCardFactory.buildVerifiedCard(null, vc.getScheme(), vc.getType(), vc.getBank()));
+            kafkaProducer.produce(new KafkaVerifiedCard( vc.getScheme(), vc.getType(), vc.getBank()));
         }
         return new ResponseEntity<>(cardResponse, HttpStatus.OK);
     }

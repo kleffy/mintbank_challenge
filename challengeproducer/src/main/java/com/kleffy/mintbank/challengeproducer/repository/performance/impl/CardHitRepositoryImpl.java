@@ -22,6 +22,7 @@ public class CardHitRepositoryImpl implements CardHitRepository {
 
     @Override
     public Map<String, Integer> getNumberOfHits(int limit) {
+        //TODO: optimise, this seems like a bad algorithm. Complexity is Big OH(n) for worst case i.e when n=limit.
         Map<String, Integer> cardHits = new HashMap<>();
         int count = 1;
         for (Map.Entry<String, CardHit> entry : this.cardHitDB.entrySet()) {
