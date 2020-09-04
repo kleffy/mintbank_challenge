@@ -1,6 +1,6 @@
-package com.kleffy.mintbank.challengeproducer.factory.verifycard;
+package com.kleffy.mintbank.challengeproducer.factory.cardscheme;
 
-import com.kleffy.mintbank.challengeproducer.domain.verifycard.VerifyCardResponse;
+import com.kleffy.mintbank.challengeproducer.domain.cardsheme.VerifyCardResponse;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

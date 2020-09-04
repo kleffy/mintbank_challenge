@@ -1,7 +1,7 @@
-package com.kleffy.mintbank.challengeproducer.factory.verifycard;
+package com.kleffy.mintbank.challengeproducer.factory.cardscheme;
 
-import com.kleffy.mintbank.challengeproducer.domain.verifycard.Payload;
-import com.kleffy.mintbank.challengeproducer.domain.verifycard.VerifyCardResponse;
+import com.kleffy.mintbank.challengeproducer.domain.cardsheme.Payload;
+import com.kleffy.mintbank.challengeproducer.domain.cardsheme.VerifyCardResponse;
 
 public class VerifyCardResponseFactory {
 
